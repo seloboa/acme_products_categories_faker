@@ -14,7 +14,6 @@ class Main extends Component {
   render() {
     return (
       <div>
-        <p>hi</p>
         <button onclick={this.handleClick}>Create Category</button>
       </div>
     );

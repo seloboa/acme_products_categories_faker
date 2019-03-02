@@ -10,9 +10,11 @@ app.use(morgan('dev'));
 // Body parsing middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(express.static(path.join(__dirname, '..', 'public')));
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/*', (req, res, next) => {
+  console.log(path.join(__dirname),'public');
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
