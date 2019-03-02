@@ -6,7 +6,7 @@ class Main extends Component {
   constructor() {
     super();
     this.state = {
-      Category: [],
+      category: [],
     };
     this.handleClick = this.handleClick.bind(this);
   }
@@ -14,13 +14,15 @@ class Main extends Component {
   render() {
     return (
       <div>
-        <button onclick={this.handleClick}>Create Category</button>
+        <button onClick={this.handleClick}>Create Category</button>
+        <List category ={this.state.category}/>
       </div>
     );
   }
 
   handleClick() {
-    console.log('hey');
+    const cat = faker.commerce.department();
+    this.state.category.push(cat);
   }
 }
 

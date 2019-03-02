@@ -11,6 +11,7 @@ app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
+//express public folderr with bundle file so index.html can load it
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/*', (req, res, next) => {
