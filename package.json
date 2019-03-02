@@ -20,6 +20,7 @@
   "homepage": "https://github.com/seloboa/acme_products_categories_faker#readme",
   "dependencies": {
     "babel": "^6.23.0",
+    "babel-core": "^6.26.3",
     "express": "^4.16.4",
     "node": "^10.15.2",
     "pg": "^7.8.1",
