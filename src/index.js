@@ -15,7 +15,8 @@ class Main extends Component {
     return (
       <div>
         <button onClick={this.handleClick}>Create Category</button>
-        <List category ={this.state.category}/>
+        <ul>
+        </ul>
       </div>
     );
   }
