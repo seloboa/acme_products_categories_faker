@@ -1,0 +1,31 @@
+{
+  "name": "acme_products_categories_faker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "db.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seloboa/acme_products_categories_faker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/seloboa/acme_products_categories_faker/issues"
+  },
+  "homepage": "https://github.com/seloboa/acme_products_categories_faker#readme",
+  "dependencies": {
+    "babel": "^6.23.0",
+    "express": "^4.16.4",
+    "node": "^10.15.2",
+    "pg": "^7.8.1",
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3",
+    "sequelize": "^4.42.1",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.2.3"
+  }
+}
