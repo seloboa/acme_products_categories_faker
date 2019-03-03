@@ -2,36 +2,37 @@ import React, {Component} from 'react';
 import ReactDom from 'react-dom';
 import axios from 'axios';
 
-class CategoryList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      products: [],
-    };
-  }
-  render() {
-    return this.props.categories.map(category => (
+function List(props) {
+  if (props.isCat) {
+    return props.categories.map(category => (
       <li key={category.id}>
         {category.name}
-        <button id={category.id} onClick={this.handleCreate}>
-          +
+        <button id={category.id}>+</button>
+        <button
+          id={category.id}
+          onClick={e => {
+            props.handleDelete(e, props.isCat);
+          }}
+        >
+          -
         </button>
-        <button id={category.id} onClick={this.props.handleDelete}>
+      </li>
+    ));
+  } else {
+    return props.products.map(product => (
+      <li key={product.id}>
+        {product.name}
+        <button
+          id={product.id}
+          onClick={e => {
+            props.handleDelete(e, props.isCat);
+          }}
+        >
           -
         </button>
       </li>
     ));
   }
-
-  handleCreate() {
-    const pro = faker.commerce.productName();
-    axios.post('/api/:id/product', {name: pro});
-    // axios.get('/api/product').then(newData => {
-    //   this.setState({
-    //     categories: newData.data,
-    //   });
-    // });
-  }
 }
 
-export default CategoryList;
+export default List;

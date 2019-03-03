@@ -2,13 +2,14 @@ import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 const faker = require('faker');
 import axios from 'axios';
-import CategoryList from './Category';
+import List from './Category';
 
 class Main extends Component {
   constructor() {
     super();
     this.state = {
       categories: [],
+      product: [],
     };
     this.handleCreate = this.handleCreate.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
@@ -27,34 +28,51 @@ class Main extends Component {
   render() {
     return (
       <div>
-        <button onClick={this.handleCreate}>Create Category</button>
+        <button onClick={() => this.handleCreate(true)}>Create Category</button>
         <ul>
-          <CategoryList
+          <List
             categories={this.state.categories}
+            products = {this.state.products}
             handleDelete={this.handleDelete}
+            handleCreate={this.handleCreate}
+            isCat={true}
           />
         </ul>
       </div>
     );
   }
 
-  handleDelete(e) {
-    axios.delete(`/api/categories/${e.target.id}`);
-    axios.get('/api/categories').then(newData => {
-      this.setState({
-        categories: newData.data,
-      });
-    });
+  handleDelete(e, isCat) {
+    if (isCat) {
+      axios
+        .delete(`/api/categories/${e.target.id}`)
+        .catch(err => console.log(err));
+      axios
+        .get('/api/categories')
+        .then(newData => {
+          this.setState({
+            categories: newData.data,
+          });
+        })
+        .catch(err => console.log(err));
+    } else {
+    }
   }
 
-  handleCreate() {
-    const cat = faker.commerce.department();
-    axios.post('/api/categories', {name: cat});
-    axios.get('/api/categories').then(newData => {
-      this.setState({
-        categories: newData.data,
-      });
-    });
+  handleCreate(isCat) {
+    if (isCat) {
+      const cat = faker.commerce.department();
+      axios.post('/api/categories', {name: cat}).catch(err => console.log(err));
+      axios
+        .get('/api/categories')
+        .then(newData => {
+          this.setState({
+            categories: newData.data,
+          });
+        })
+        .catch(err => console.log(err));
+    } else {
+    }
   }
 }
 

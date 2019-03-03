@@ -41,6 +41,7 @@ app.delete('/api/categories/:id', (req, res, next) => {
     })
   );
 });
+
 app.listen(PORT, () => {
   console.log(`listening on ${PORT}`);
 });
