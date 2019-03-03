@@ -35,11 +35,31 @@ app.post('/api/categories', (req, res, next) => {
 });
 
 app.delete('/api/categories/:id', (req, res, next) => {
-  db.sync().then(() =>
-    Category.destroy({
-      where: {id: req.params.id},
-    })
-  );
+  db.sync()
+    .then(() =>
+      Product.destroy({
+        where: {categoryId: req.params.id},
+      })
+    )
+    .then(() =>
+      Category.destroy({
+        where: {id: req.params.id},
+      })
+    );
+});
+
+app.get('/api/products', (req, res, next) => {
+  db.sync()
+    .then(() =>
+      Product.findAll(
+        {include: [{model: Category}]},
+        {
+          order: [['id', 'ASC']],
+        }
+      )
+    )
+    .then(product => res.json(product))
+    .catch(next);
 });
 
 app.listen(PORT, () => {

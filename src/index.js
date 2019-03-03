@@ -2,14 +2,13 @@ import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 const faker = require('faker');
 import axios from 'axios';
-import List from './Category';
+import List from './List';
 
 class Main extends Component {
   constructor() {
     super();
     this.state = {
-      categories: [],
-      product: [],
+      data: [],
     };
     this.handleCreate = this.handleCreate.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
@@ -17,9 +16,10 @@ class Main extends Component {
 
   async componentDidMount() {
     try {
-      const data = await axios.get('/api/categories');
+      const Prodata = await axios.get('/api/products');
+      console.log(Prodata);
       this.setState({
-        categories: data.data,
+        data: Prodata.data,
       });
     } catch (err) {
       console.log(err);
@@ -31,8 +31,7 @@ class Main extends Component {
         <button onClick={() => this.handleCreate(true)}>Create Category</button>
         <ul>
           <List
-            categories={this.state.categories}
-            products = {this.state.products}
+            data={this.state.data}
             handleDelete={this.handleDelete}
             handleCreate={this.handleCreate}
             isCat={true}
@@ -48,10 +47,10 @@ class Main extends Component {
         .delete(`/api/categories/${e.target.id}`)
         .catch(err => console.log(err));
       axios
-        .get('/api/categories')
+        .get('/api/products')
         .then(newData => {
           this.setState({
-            categories: newData.data,
+            data: newData.data,
           });
         })
         .catch(err => console.log(err));
@@ -64,10 +63,10 @@ class Main extends Component {
       const cat = faker.commerce.department();
       axios.post('/api/categories', {name: cat}).catch(err => console.log(err));
       axios
-        .get('/api/categories')
+        .get('/api/products')
         .then(newData => {
           this.setState({
-            categories: newData.data,
+            data: newData.data,
           });
         })
         .catch(err => console.log(err));
