@@ -24,17 +24,23 @@ app.get('/', (req, res, next) => {
 app.get('/api/categories', async (req, res, next) => {
   await db.sync();
   Category.findAll({
-    order:[['id','ASC']]
+    order: [['id', 'ASC']],
   })
     .then(category => res.json(category))
     .catch(next);
 });
 
-app.post('/api/categories', async (req, res, next) => {
-  await db.sync();
-  await Category.create(req.body);
+app.post('/api/categories', (req, res, next) => {
+  db.sync().then(() => Category.create(req.body));
 });
 
+app.delete('/api/categories/:id', (req, res, next) => {
+  db.sync().then(() =>
+    Category.destroy({
+      where: {id: req.params.id},
+    })
+  );
+});
 app.listen(PORT, () => {
   console.log(`listening on ${PORT}`);
 });

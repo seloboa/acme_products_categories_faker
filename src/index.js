@@ -10,7 +10,8 @@ class Main extends Component {
     this.state = {
       categories: [],
     };
-    this.handleClick = this.handleClick.bind(this);
+    this.handleCreate = this.handleCreate.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   async componentDidMount() {
@@ -26,15 +27,27 @@ class Main extends Component {
   render() {
     return (
       <div>
-        <button onClick={this.handleClick}>Create Category</button>
+        <button onClick={this.handleCreate}>Create Category</button>
         <ul>
-          <List categories={this.state.categories} />
+          <List
+            categories={this.state.categories}
+            handleDelete={this.handleDelete}
+          />
         </ul>
       </div>
     );
   }
 
-  handleClick() {
+  handleDelete(e) {
+    axios.delete(`/api/categories/${e.target.id}`);
+    axios.get('/api/categories').then(newData => {
+      this.setState({
+        categories: newData.data,
+      });
+    });
+  }
+
+  handleCreate() {
     const cat = faker.commerce.department();
     axios.post('/api/categories', {name: cat});
     axios.get('/api/categories').then(newData => {

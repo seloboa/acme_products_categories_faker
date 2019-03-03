@@ -8,8 +8,6 @@ class List extends Component {
     this.state = {
       products: [],
     };
-    this.handleDelete = this.handleDelete.bind(this);
-    this.handleCreate = this.handleCreate.bind(this);
   }
   render() {
     return this.props.categories.map(category => (
@@ -18,17 +16,13 @@ class List extends Component {
         <button id={category.id} onClick={this.handleCreate}>
           +
         </button>
-        <button id={category.id} onClick={this.handleDelete}>
+        <button id={category.id} onClick={this.props.handleDelete}>
           -
         </button>
       </li>
     ));
   }
-  handleDelete(e) {
-    axios.delete('/api/categories', {
-      id: e.target.id,
-    });
-  }
+
   handleCreate() {
     // const cat = faker.commerce.productName();
     // axios.post('/api/product', {name: cat});
