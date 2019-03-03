@@ -28,6 +28,7 @@ app.get('/api/categories', (req, res, next) => {
     .catch(next);
 });
 
+
 app.listen(PORT, () => {
   console.log(`listening on ${PORT}`);
 });
