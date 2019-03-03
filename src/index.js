@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 const faker = require('faker');
 import axios from 'axios';
-import List from './List';
+import CategoryList from './Category';
 
 class Main extends Component {
   constructor() {
@@ -29,7 +29,7 @@ class Main extends Component {
       <div>
         <button onClick={this.handleCreate}>Create Category</button>
         <ul>
-          <List
+          <CategoryList
             categories={this.state.categories}
             handleDelete={this.handleDelete}
           />

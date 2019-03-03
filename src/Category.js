@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import ReactDom from 'react-dom';
 import axios from 'axios';
 
-class List extends Component {
+class CategoryList extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -24,8 +24,8 @@ class List extends Component {
   }
 
   handleCreate() {
-    // const cat = faker.commerce.productName();
-    // axios.post('/api/product', {name: cat});
+    const pro = faker.commerce.productName();
+    axios.post('/api/:id/product', {name: pro});
     // axios.get('/api/product').then(newData => {
     //   this.setState({
     //     categories: newData.data,
@@ -34,4 +34,4 @@ class List extends Component {
   }
 }
 
-export default List;
+export default CategoryList;
