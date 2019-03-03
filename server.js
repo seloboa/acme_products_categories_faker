@@ -18,16 +18,22 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res, next) => {
-  console.log(path.join(__dirname), 'public');
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-app.get('/api/categories', (req, res, next) => {
-  Category.findAll()
+app.get('/api/categories', async (req, res, next) => {
+  await db.sync();
+  Category.findAll({
+    order:[['id','ASC']]
+  })
     .then(category => res.json(category))
     .catch(next);
 });
 
+app.post('/api/categories', async (req, res, next) => {
+  await db.sync();
+  await Category.create(req.body);
+});
 
 app.listen(PORT, () => {
   console.log(`listening on ${PORT}`);

@@ -28,15 +28,20 @@ class Main extends Component {
       <div>
         <button onClick={this.handleClick}>Create Category</button>
         <ul>
-          <List categories = {this.state.categories}/>
+          <List categories={this.state.categories} />
         </ul>
       </div>
     );
   }
 
   handleClick() {
-    // const cat = faker.commerce.department();
-    // this.state.category.push(cat);
+    const cat = faker.commerce.department();
+    axios.post('/api/categories', {name: cat});
+    axios.get('/api/categories').then(newData => {
+      this.setState({
+        categories: newData.data,
+      });
+    });
   }
 }
 
