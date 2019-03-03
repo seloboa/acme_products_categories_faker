@@ -2,12 +2,13 @@ import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 const faker = require('faker');
 import axios from 'axios';
+import List from './List';
 
 class Main extends Component {
   constructor() {
     super();
     this.state = {
-      category: [],
+      categories: [],
     };
     this.handleClick = this.handleClick.bind(this);
   }
@@ -16,9 +17,8 @@ class Main extends Component {
     try {
       const data = await axios.get('/api/categories');
       this.setState({
-        category: data,
+        categories: data.data,
       });
-      console.log(this.state);
     } catch (err) {
       console.log(err);
     }
@@ -27,6 +27,9 @@ class Main extends Component {
     return (
       <div>
         <button onClick={this.handleClick}>Create Category</button>
+        <ul>
+          <List categories = {this.state.categories}/>
+        </ul>
       </div>
     );
   }
