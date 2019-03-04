@@ -33,7 +33,8 @@ app.get('/api/categories', async (req, res, next) => {
 app.post('/api/categories', (req, res, next) => {
   db.sync()
     .then(() => Category.create(req.body))
-    .then(response => res.send('created'));
+    .then(response => res.send('created'))
+    .catch(next);
 });
 
 app.delete('/api/categories/:id', (req, res, next) => {
@@ -70,8 +71,19 @@ app.post('/api/categories/:id/products', (req, res, next) => {
       categoryId: req.params.id,
     })
       .then(response => res.send('created'))
-      .catch(err => console.log(err))
+      .catch(next)
   );
+});
+
+app.delete('/api/products/:id', (req, res, next) => {
+  db.sync()
+    .then(response =>
+      Product.destroy({
+        where: {id: req.params.id},
+      })
+    )
+    .then(response => res.send('deleted'))
+    .catch(next);
 });
 
 app.listen(PORT, () => {

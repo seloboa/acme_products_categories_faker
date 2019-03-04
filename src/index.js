@@ -43,6 +43,7 @@ class Main extends Component {
         .delete(`/api/categories/${e.target.id}`)
         .catch(err => console.log(err));
     } else {
+      await axios.delete(`/api/products/${e.target.id}`)
     }
     this.getData();
   }
@@ -54,9 +55,7 @@ class Main extends Component {
         .post('/api/categories', {name: cat})
         .catch(err => console.log(err));
     } else {
-      console.log(e.target.id)
       const product = faker.commerce.productName();
-      console.log(product);
       await axios
         .post(`/api/categories/${e.target.id}/products`, {
           name: product,
