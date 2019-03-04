@@ -18,13 +18,14 @@ class Main extends Component {
 
   async componentDidMount() {
     this.getData();
-
   }
 
   render() {
     return (
       <div>
-        <button onClick={() => this.handleCreate(true)}>Create Category</button>
+        <button onClick={e => this.handleCreate(e, true)}>
+          Create Category
+        </button>
         <ul>
           <App
             data={this.state.data}
@@ -36,23 +37,25 @@ class Main extends Component {
     );
   }
 
-  handleDelete(e, isCat) {
+  async handleDelete(e, isCat) {
     if (isCat) {
-      axios
+      await axios
         .delete(`/api/categories/${e.target.id}`)
         .catch(err => console.log(err));
-      this.getData();
     } else {
     }
+    this.getData();
   }
 
-  handleCreate(e, isCat) {
+  async handleCreate(e, isCat) {
     if (isCat) {
       const cat = faker.commerce.department();
-      axios.post('/api/categories', {name: cat}).catch(err => console.log(err));
+      await axios
+        .post('/api/categories', {name: cat})
+        .catch(err => console.log(err));
     } else {
       const product = faker.commerce.productName();
-      axios
+      await axios
         .post('/api/categories/:id/products', {
           name: product,
           categoryId: e.target.id,
@@ -67,7 +70,7 @@ class Main extends Component {
       const catData = await axios.get('/api/categories');
       const proData = await axios.get('/api/products');
       const combinedData = catData.data.map(cat => {
-        cat.products = proData.data.filter(pro => (pro.categoryId === cat.id));
+        cat.products = proData.data.filter(pro => pro.categoryId === cat.id);
         return cat;
       });
       this.setState({

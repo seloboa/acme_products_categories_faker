@@ -31,7 +31,9 @@ app.get('/api/categories', async (req, res, next) => {
 });
 
 app.post('/api/categories', (req, res, next) => {
-  db.sync().then(() => Category.create(req.body));
+  db.sync()
+    .then(() => Category.create(req.body))
+    .then(response => res.send('created'));
 });
 
 app.delete('/api/categories/:id', (req, res, next) => {
@@ -45,7 +47,9 @@ app.delete('/api/categories/:id', (req, res, next) => {
       Category.destroy({
         where: {id: req.params.id},
       })
-    );
+    )
+    .then(response => res.send('deleted'))
+    .catch(next);
 });
 
 app.get('/api/products', (req, res, next) => {
@@ -60,11 +64,16 @@ app.get('/api/products', (req, res, next) => {
 });
 
 app.post('/api/categories/:id/products', (req, res, next) => {
-  Product.create({
-    name: req.body.name,
-    categoryId: req.body.id,
-  });
+  db.sync().then(response =>
+    Product.create({
+      name: req.body.name,
+      categoryId: req.body.id,
+    })
+      .then(response => res.send('created'))
+      .catch(err => console.log(err))
+  );
 });
+
 app.listen(PORT, () => {
   console.log(`listening on ${PORT}`);
 });
