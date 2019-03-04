@@ -16,15 +16,20 @@ class Main extends Component {
 
   async componentDidMount() {
     try {
-      const Prodata = await axios.get('/api/products');
-      console.log(Prodata);
+      const catData = await axios.get('/api/categories');
+      const proData = await axios.get('/api/products');
+      const combinedData = catData.data.map(cat => {
+        cat.product = proData.data.filter(pro => (pro.categoryId = cat.id));
+        return cat;
+      });
       this.setState({
-        data: Prodata.data,
+        data: combinedData,
       });
     } catch (err) {
       console.log(err);
     }
   }
+
   render() {
     return (
       <div>
