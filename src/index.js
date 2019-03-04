@@ -12,22 +12,11 @@ class Main extends Component {
     };
     this.handleCreate = this.handleCreate.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.getData = this.getData.bind(this);
   }
 
   async componentDidMount() {
-    try {
-      const catData = await axios.get('/api/categories');
-      const proData = await axios.get('/api/products');
-      const combinedData = catData.data.map(cat => {
-        cat.product = proData.data.filter(pro => (pro.categoryId = cat.id));
-        return cat;
-      });
-      this.setState({
-        data: combinedData,
-      });
-    } catch (err) {
-      console.log(err);
-    }
+    this.getData();
   }
 
   render() {
@@ -51,14 +40,7 @@ class Main extends Component {
       axios
         .delete(`/api/categories/${e.target.id}`)
         .catch(err => console.log(err));
-      axios
-        .get('/api/products')
-        .then(newData => {
-          this.setState({
-            data: newData.data,
-          });
-        })
-        .catch(err => console.log(err));
+      this.getData();
     } else {
     }
   }
@@ -67,15 +49,24 @@ class Main extends Component {
     if (isCat) {
       const cat = faker.commerce.department();
       axios.post('/api/categories', {name: cat}).catch(err => console.log(err));
-      axios
-        .get('/api/products')
-        .then(newData => {
-          this.setState({
-            data: newData.data,
-          });
-        })
-        .catch(err => console.log(err));
+      this.getData();
     } else {
+    }
+  }
+
+  async getData() {
+    try {
+      const catData = await axios.get('/api/categories');
+      const proData = await axios.get('/api/products');
+      const combinedData = catData.data.map(cat => {
+        cat.product = proData.data.filter(pro => (pro.categoryId = cat.id));
+        return cat;
+      });
+      this.setState({
+        data: combinedData,
+      });
+    } catch (err) {
+      console.log(err);
     }
   }
 }
