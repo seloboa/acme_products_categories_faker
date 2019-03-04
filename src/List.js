@@ -4,12 +4,33 @@ import axios from 'axios';
 
 function List(props) {
   if (props.isCat) {
-    return props.data.map(cat => (
-      <li key={cat.id}>
-        {cat.name}
-        <button id={cat.id}>+</button>
+    return (
+      <li key={props.data.id}>
+        {props.data.name}
         <button
-          id={cat.id}
+          id={props.data.id}
+          onClick={e => {
+            props.handleCreate(e, false);
+          }}
+        >
+          +
+        </button>
+        <button
+          id={props.data.id}
+          onClick={e => {
+            props.handleDelete(e, props.isCat);
+          }}
+        >
+          -
+        </button>
+      </li>
+    );
+  } else {
+    return props.data.map(product => (
+      <li key={product.id}>
+        {product.name}
+        <button
+          id={product.id}
           onClick={e => {
             props.handleDelete(e, props.isCat);
           }}
@@ -18,21 +39,6 @@ function List(props) {
         </button>
       </li>
     ));
-  } else {
-    return <p>hey</p>;
-    // return props.products.map(product => (
-    //   <li key={product.id}>
-    //     {product.name}
-    //     <button
-    //       id={product.id}
-    //       onClick={e => {
-    //         props.handleDelete(e, props.isCat);
-    //       }}
-    //     >
-    //       -
-    //     </button>
-    //   </li>
-    // ));
   }
 }
 

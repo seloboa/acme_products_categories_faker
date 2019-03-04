@@ -51,17 +51,20 @@ app.delete('/api/categories/:id', (req, res, next) => {
 app.get('/api/products', (req, res, next) => {
   db.sync()
     .then(() =>
-      Product.findAll(
-        {include: [{model: Category}]},
-        {
-          order: [['id', 'ASC']],
-        }
-      )
+      Product.findAll({
+        order: [['id', 'ASC']],
+      })
     )
     .then(product => res.json(product))
     .catch(next);
 });
 
+app.post('/api/categories/:id/products', (req, res, next) => {
+  Product.create({
+    name: req.body.name,
+    categoryId: req.body.id,
+  });
+});
 app.listen(PORT, () => {
   console.log(`listening on ${PORT}`);
 });
