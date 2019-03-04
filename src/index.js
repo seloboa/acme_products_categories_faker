@@ -54,9 +54,11 @@ class Main extends Component {
         .post('/api/categories', {name: cat})
         .catch(err => console.log(err));
     } else {
+      console.log(e.target.id)
       const product = faker.commerce.productName();
+      console.log(product);
       await axios
-        .post('/api/categories/:id/products', {
+        .post(`/api/categories/${e.target.id}/products`, {
           name: product,
           categoryId: e.target.id,
         })

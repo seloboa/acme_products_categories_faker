@@ -67,7 +67,7 @@ app.post('/api/categories/:id/products', (req, res, next) => {
   db.sync().then(response =>
     Product.create({
       name: req.body.name,
-      categoryId: req.body.id,
+      categoryId: req.params.id,
     })
       .then(response => res.send('created'))
       .catch(err => console.log(err))
