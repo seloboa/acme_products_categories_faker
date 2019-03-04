@@ -23,10 +23,13 @@ class Main extends Component {
   render() {
     return (
       <div>
-        <button onClick={e => this.handleCreate(e, true)}>
+        <button
+          onClick={e => this.handleCreate(e, true)}
+          className={'btn btn-primary'}
+        >
           Create Category
         </button>
-        <ul>
+        <ul className={'list-group'}>
           <App
             data={this.state.data}
             handleDelete={this.handleDelete}
@@ -39,29 +42,39 @@ class Main extends Component {
 
   async handleDelete(e, isCat) {
     if (isCat) {
-      await axios
-        .delete(`/api/categories/${e.target.id}`)
-        .catch(err => console.log(err));
+      try {
+        await axios.delete(`/api/categories/${e.target.id}`);
+      } catch (err) {
+        console.log(err);
+      }
     } else {
-      await axios.delete(`/api/products/${e.target.id}`)
+      try {
+        await axios.delete(`/api/products/${e.target.id}`);
+      } catch (err) {
+        console.log(err);
+      }
     }
     this.getData();
   }
 
   async handleCreate(e, isCat) {
     if (isCat) {
-      const cat = faker.commerce.department();
-      await axios
-        .post('/api/categories', {name: cat})
-        .catch(err => console.log(err));
+      try {
+        const cat = faker.commerce.department();
+        await axios.post('/api/categories', {name: cat});
+      } catch (err) {
+        console.log(err);
+      }
     } else {
-      const product = faker.commerce.productName();
-      await axios
-        .post(`/api/categories/${e.target.id}/products`, {
+      try {
+        const product = faker.commerce.productName();
+        await axios.post(`/api/categories/${e.target.id}/products`, {
           name: product,
           categoryId: e.target.id,
-        })
-        .catch(err => console.log(err));
+        });
+      } catch (err) {
+        console.log(err);
+      }
     }
     this.getData();
   }
