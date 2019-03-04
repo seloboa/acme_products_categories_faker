@@ -1,6 +1,4 @@
-import React, {Component} from 'react';
-import ReactDom from 'react-dom';
-import axios from 'axios';
+import React from 'react';
 import List from './List';
 
 function App(props) {
@@ -8,14 +6,31 @@ function App(props) {
     if (cat.products.length > 0) {
       return (
         <div>
-          <List data={cat} handleCreate = {props.handleCreate} handleDelete = {props.handleDelete} isCat={true} />
+          <List
+            data={cat}
+            handleCreate={props.handleCreate}
+            handleDelete={props.handleDelete}
+            isCat={true}
+          />
           <ul>
-            <List data={cat.products} handleCreate = {props.handleCreate} handleDelete = {props.handleDelete} isCat={false} />
+            <List
+              data={cat.products}
+              handleCreate={props.handleCreate}
+              handleDelete={props.handleDelete}
+              isCat={false}
+            />
           </ul>
         </div>
       );
     } else {
-      return <List data={cat} handleCreate = {props.handleCreate} handleDelete = {props.handleDelete} isCat={true} />;
+      return (
+        <List
+          data={cat}
+          handleCreate={props.handleCreate}
+          handleDelete={props.handleDelete}
+          isCat={true}
+        />
+      );
     }
   });
 }

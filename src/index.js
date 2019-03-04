@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 const faker = require('faker');
 import axios from 'axios';
-import List from './List';
 import App from './App';
 
 class Main extends Component {
